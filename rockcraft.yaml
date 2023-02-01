@@ -1,0 +1,37 @@
+name: grafana-agent
+summary: Grafana Agent in a ROCK.
+description: "Grafana Agent is a single binary collector for metrics and logging, useful for per-node metrics or proxying from edge endpoints."
+version: "0.31.0"
+base: ubuntu:22.04
+build-base: ubuntu:22.04
+license: Apache-2.0
+entrypoint: ["/bin/grafana-agent"]
+cmd: ["--config.file=/etc/agent/agent.yaml", "--metrics.wal-directory=/etc/agent/data"]
+
+platforms:
+  amd64:
+parts:
+  grafana-agent:
+    plugin: go
+    source: https://github.com/grafana/agent
+    source-type: git
+    source-tag: "v0.31.0"
+    build-snaps:
+      - go/1.19/stable
+    build-environment:
+      - USE_CONTAINER: 0
+      - RELEASE_BUILD: 1
+    override-build: |
+      make agent
+      install -D -m755 build/grafana-agent ${CRAFT_PART_INSTALL}/opt/agent/bin/grafana-agent
+      ln -sv /bin/grafana-agent ${CRAFT_PART_INSTALL}/opt/agent/bin/agent
+    organize:
+      opt/agent/bin/grafana-agent: usr/bin/grafana-agent
+      opt/agent/bin/agent: usr/bin/agent
+  default-config:
+    plugin: dump
+    source: .
+    organize:
+      agent.yaml: etc/agent/agent.yaml
+    stage:
+      - etc/agent/agent.yaml
