@@ -5,10 +5,15 @@ version: "0.32.1"
 base: ubuntu:22.04
 build-base: ubuntu:22.04
 license: Apache-2.0
-entrypoint: ["/bin/grafana-agent"]
-cmd: ["--config.file=/etc/agent/agent.yaml", "--metrics.wal-directory=/etc/agent/data"]
 platforms:
   amd64:
+
+services:
+  agent:
+    command: /usr/bin/grafana-agent --config.file=/etc/agent/agent.yaml --metrics.wal-directory=/etc/agent/data
+    override: replace
+    startup: enabled
+
 parts:
   grafana-agent:
     plugin: go
