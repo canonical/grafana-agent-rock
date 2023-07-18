@@ -23,6 +23,8 @@ parts:
     build-environment:
       - USE_CONTAINER: 0
       - RELEASE_BUILD: 1
+    stage-packages:
+      - ca-certificates
     override-build: |
       make agent
       install -D -m755 build/grafana-agent ${CRAFT_PART_INSTALL}/opt/agent/bin/grafana-agent
