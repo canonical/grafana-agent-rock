@@ -7,6 +7,7 @@ build-base: ubuntu@22.04
 license: Apache-2.0
 platforms:
   amd64:
+  arm64:
 services:
   agent:
     command: /usr/bin/grafana-agent --config.file=/etc/agent/agent.yaml --metrics.wal-directory=/etc/agent/data
