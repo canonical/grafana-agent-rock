@@ -40,9 +40,13 @@ parts:
       agent.yaml: etc/agent/agent.yaml
     stage:
       - etc/agent/agent.yaml
+  ca-certs:
+    plugin: nil
+    overlay-packages: [ca-certificates]
   deb-security-manifest:
     plugin: nil
     after:
+      - ca-certs
       - grafana-agent
     override-prime: |
       set -x
