@@ -1,5 +1,5 @@
 name: grafana-agent
-summary: Grafana Agent in a ROCK.
+summary: Grafana Agent in a rock.
 description: "Grafana Agent is a single binary collector for metrics and logging, useful for per-node metrics or proxying from edge endpoints."
 version: "0.35.2"
 base: ubuntu@22.04
