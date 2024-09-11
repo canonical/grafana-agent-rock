@@ -1,0 +1,54 @@
+name: grafana-agent
+summary: Grafana Agent in a ROCK.
+description: "Grafana Agent is a single binary collector for metrics and logging, useful for per-node metrics or proxying from edge endpoints."
+version: "0.43.0"
+base: ubuntu@22.04
+build-base: ubuntu@22.04
+license: Apache-2.0
+platforms:
+  amd64:
+  arm64:
+services:
+  agent:
+    command: /usr/bin/grafana-agent --config.file=/etc/agent/agent.yaml --metrics.wal-directory=/etc/agent/data
+    override: replace
+    startup: enabled
+parts:
+  grafana-agent:
+    plugin: go
+    source: https://github.com/grafana/agent
+    source-type: git
+    source-tag: "v0.43.0"
+    build-snaps:
+      - go/1.22/stable
+    build-environment:
+      - USE_CONTAINER: 0
+      - RELEASE_BUILD: 1
+    stage-packages:
+      - ca-certificates
+    override-build: |
+      make agent
+      install -D -m755 build/grafana-agent ${CRAFT_PART_INSTALL}/opt/agent/bin/grafana-agent
+      ln -sv /bin/grafana-agent ${CRAFT_PART_INSTALL}/opt/agent/bin/agent
+    organize:
+      opt/agent/bin/grafana-agent: usr/bin/grafana-agent
+      opt/agent/bin/agent: usr/bin/agent
+  default-config:
+    plugin: dump
+    source: .
+    organize:
+      agent.yaml: etc/agent/agent.yaml
+    stage:
+      - etc/agent/agent.yaml
+  ca-certs:
+    plugin: nil
+    overlay-packages: [ca-certificates]
+  deb-security-manifest:
+    plugin: nil
+    after:
+      - grafana-agent
+      - ca-certs
+    override-prime: |
+      set -x
+      mkdir -p $CRAFT_PRIME/usr/share/rocks/
+      (echo "# os-release" && cat /etc/os-release && echo "# dpkg-query" && dpkg-query --admindir=$CRAFT_PRIME/var/lib/dpkg/ -f '${db:Status-Abbrev},${binary:Package},${Version},${source:Package},${Source:Version}\n' -W) > $CRAFT_PRIME/usr/share/rocks/dpkg.query
