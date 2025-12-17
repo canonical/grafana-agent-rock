@@ -31,7 +31,7 @@ run version=latest_version: (push-to-registry version)
 #  GOSS_OPTS="--retry-timeout 60s" kgoss run -i localhost:32000/${rock_name}-dev:${version}
 test version=latest_version: (push-to-registry version)
   echo "See https://github.com/canonical/observability/issues/410"
-  sudo ctr run --net-host -d local/gagent:0.44.6 ga
+  sudo ctr run -d local/gagent:0.44.6 -p 12345:12345 ga
   goss validate
   sudo ctr task kill ga
   sudo ctr container rm ga
