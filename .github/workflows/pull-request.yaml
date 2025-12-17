@@ -14,3 +14,12 @@ jobs:
     name: PR
     uses: canonical/observability/.github/workflows/rock-pull-request.yaml@v0
     secrets: inherit
+  debug:
+    name: Debug
+    needs: [pull-request]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Setup tmate session
+        if: ${{ failure() }}
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 15
