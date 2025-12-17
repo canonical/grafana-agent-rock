@@ -62,7 +62,9 @@ jobs:
             just test "$version"
             just clean "$version"
           done
-      - name: Setup tmate session
-        if: ${{ failure() }}
+      - name: Open SSH session on failure
+        if: ${{ failure() && (runner.debug == '1') }}
         uses: mxschmitt/action-tmate@v3
         timeout-minutes: 15
+        with:
+          limit-access-to-actor: true
