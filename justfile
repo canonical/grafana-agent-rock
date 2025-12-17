@@ -32,5 +32,5 @@ run version=latest_version: (push-to-registry version)
 #test version=latest_version: (push-to-registry version)
 #  GOSS_OPTS="--retry-timeout 60s" kgoss run -i localhost:32000/${rock_name}-dev:${version}
 test version=latest_version:
-  echo "Skipped due to falkiness; see https://github.com/canonical/observability/issues/410"
+  echo "Skipped due to flakiness; see https://github.com/canonical/observability/issues/410"
 
