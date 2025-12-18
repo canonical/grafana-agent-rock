@@ -4,10 +4,10 @@ process:
 http:
   instances:
     status: 200
-    url: http://localhost:12345/agent/api/v1/metrics/instances
+    url: http://127.0.0.1:12345/agent/api/v1/metrics/instances
   ready:
     status: 200
-    url: http://localhost:12345/-/ready
+    url: http://127.0.0.1:12345/-/ready
   healthy:
     status: 200
-    url: http://localhost:12345/-/healthy
+    url: http://127.0.0.1:12345/-/healthy
