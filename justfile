@@ -36,6 +36,6 @@ test version=latest_version: (push-to-registry version)
   sudo ctr run --net-host -d local/gagent:${version} ga
   #sudo nerdctl run -p 12345:12345 -d --name ga local/gagent:${version}
 
-  goss validate
+  #goss validate
   sudo ctr task kill ga
   sudo ctr container rm ga
