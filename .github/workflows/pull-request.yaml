@@ -55,6 +55,7 @@ jobs:
           curl -L ${goss_base_url}/goss-linux-amd64 -o /usr/local/bin/goss
           chmod +rx /usr/local/bin/goss
           sudo apt install containerd
+          sudo sh -c 'curl -fsSL https://github.com/containerd/nerdctl/releases/download/v2.2.0/nerdctl-2.2.0-linux-amd64.tar.gz | tar xz -C /usr/bin nerdctl'
       - name: Pack and test the rocks
         run: |
           for version in ${{ needs.changes.outputs.versions }}; do
