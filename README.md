@@ -4,6 +4,9 @@
 [![Publish to GHCR:dev](https://github.com/canonical/grafana-agent-rock/actions/workflows/release-dev.yaml/badge.svg)](https://github.com/canonical/grafana-agent-rock/actions/workflows/release-dev.yaml)
 [![Update rock](https://github.com/canonical/grafana-agent-rock/actions/workflows/update.yaml/badge.svg)](https://github.com/canonical/grafana-agent-rock/actions/workflows/update.yaml)
 
+> [!WARNING]  
+> This rock reaches end of life July 2026. Consider switching to [opentelemetry-collector](https://github.com/canonical/opentelemetry-collector-rock) for continued support.
+
 [Rocks](https://canonical-rockcraft.readthedocs-hosted.com/en/latest/) for [Grafana Agent](https://grafana.com/oss/agent/).  
 This repository holds all the necessary files to build rocks for the upstream versions we support. The Grafana Agent rock is used by the [grafana-agent-k8s-operator](https://github.com/canonical/grafana-agent-k8s-operator) charm.
 
